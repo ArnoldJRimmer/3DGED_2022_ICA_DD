@@ -92,6 +92,8 @@ namespace GD.App
 
         }
 
+        //This method helps predict where the camera will be given it's current path
+        //(Sort of like casting a ray, and works out where the camera will be if it moved forward from it's current position forward
         public Vector3 PreviewMove(float scale)
         {
             Matrix rotate = Matrix.CreateRotationY(rotation);

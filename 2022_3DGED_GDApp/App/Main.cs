@@ -57,7 +57,10 @@ namespace GD.App
             //Rotates the camera to the right
             if (keyState.IsKeyDown(Keys.Right))
             {
-                //This takes a value and turns it into a value between pi and -pi to allow full rotation
+
+                //The camera has an angle and a speed at which it will rotate the mathhelper works this to one full revolution
+                //The WrapAngle handles going over 360 and under 0 for us and returns a value that traverses this boundary
+                //(ie. It does the maths for me because i'm an idiot and also i don't have time or to do it myself :) )
                 playerCamera.Rotation = MathHelper.WrapAngle(playerCamera.Rotation - (rotateScale * timeElapsed));
             }
 
@@ -82,7 +85,7 @@ namespace GD.App
             //As long as the player is moving 
             if (moveAmount != 0)
             {
-                //we create a new vector 3 that holds the direction the player is facing
+                //we create a new vector 3 that holds the direction the player is facing and where they will end up if they moved forward
                 Vector3 newLocation = playerCamera.PreviewMove(moveAmount);
                 bool allowMovement = true;
 
