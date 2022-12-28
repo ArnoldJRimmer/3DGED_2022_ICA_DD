@@ -36,6 +36,7 @@ namespace GD.App
                 counter++;
                 for (int z = 0; z < mazeHeight; z++)
                 {
+                    counter++;
                     foreach (VertexPositionColor vertex in FloorTile(x, z, floorColors[counter % 2]))
                     {
                         vertexList.Add(vertex);

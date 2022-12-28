@@ -52,6 +52,7 @@ namespace GD.App
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+            theLevel.Draw(playerCamera, basicEffect);
             // TODO: Add your drawing code here
             base.Draw(gameTime);
         }
