@@ -63,6 +63,25 @@ namespace GD.App
             return verticesList;
 
         }
+
+        #endregion
+
+
+        #region Draw
+        public void Draw(FpsCamera fpCamera, BasicEffect effect)
+        {
+            effect.VertexColorEnabled = true;
+            effect.World = Matrix.Identity;
+            effect.View = fpCamera.View;
+            effect.Projection = fpCamera.Projection;
+
+            foreach (EffectPass pass in effect.CurrentTechnique.Passes)
+            {
+                pass.Apply();
+                myDevice.SetVertexBuffer(floorBuffer);
+                myDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, floorBuffer.VertexCount / 3);
+            }
+        }
         #endregion
     }
 }

@@ -4,26 +4,9 @@
 #define SHOW_DEBUG_INFO
 
 #endregion
-
-using App.Managers;
-using GD.Core;
-using GD.Engine;
-using GD.Engine.Events;
-using GD.Engine.Globals;
-using GD.Engine.Inputs;
-using GD.Engine.Managers;
-using GD.Engine.Parameters;
-using GD.Engine.Utilities;
-using JigLibX.Collision;
-using JigLibX.Geometry;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
-using Application = GD.Engine.Globals.Application;
-using Cue = GD.Engine.Managers.Cue;
-using Keys = Microsoft.Xna.Framework.Input.Keys;
 
 namespace GD.App
 {
@@ -31,6 +14,9 @@ namespace GD.App
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        private FpsCamera playerCamera;
+        private Maze theLevel;
+        private BasicEffect basicEffect;
 
         public Main()
         {
@@ -42,6 +28,9 @@ namespace GD.App
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            playerCamera = new FpsCamera(new Vector3(0.5f, 0.5f, 0.5f), 0, GraphicsDevice.Viewport.AspectRatio, 0.05f, 100f);
+            basicEffect = new BasicEffect(GraphicsDevice);
+            theLevel = new Maze(GraphicsDevice);
             base.Initialize();
         }
 
