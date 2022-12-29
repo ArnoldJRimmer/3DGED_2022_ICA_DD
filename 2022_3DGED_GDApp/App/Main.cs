@@ -89,6 +89,8 @@ namespace GD.App
                 Vector3 newLocation = playerCamera.PreviewMove(moveAmount);
                 bool allowMovement = true;
 
+                //We check to see if the player is within the bounds of the floor
+                //If they are they can move, else they can't
                 if (newLocation.X < 0 || newLocation.X > Maze.mazeWidth)
                 {
                     allowMovement = false;
@@ -104,8 +106,6 @@ namespace GD.App
                     playerCamera.MoveForward(moveAmount);
                 }
             }
-
-
 
             base.Update(gameTime);
         }
