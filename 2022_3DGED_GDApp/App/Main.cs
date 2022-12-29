@@ -4,6 +4,7 @@
 #define SHOW_DEBUG_INFO
 
 #endregion
+using App.Levels.MakingTheMaze;
 using GD.Engine;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

@@ -1,7 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GD.App;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
-namespace GD.App
+namespace App.Levels.MakingTheMaze
 {
     public class Maze
     {
@@ -20,7 +21,7 @@ namespace GD.App
         #region Constructor
         public Maze(GraphicsDevice _myDevice)
         {
-            this.myDevice = _myDevice;
+            myDevice = _myDevice;
             BuildFloorBuffer();
         }
         #endregion
@@ -45,7 +46,7 @@ namespace GD.App
             }
 
             floorBuffer = new VertexBuffer(myDevice, VertexPositionColor.VertexDeclaration, vertexList.Count, BufferUsage.WriteOnly);
-            floorBuffer.SetData<VertexPositionColor>(vertexList.ToArray());
+            floorBuffer.SetData(vertexList.ToArray());
 
         }
 
