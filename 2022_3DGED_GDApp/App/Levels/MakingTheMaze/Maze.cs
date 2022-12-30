@@ -1,21 +1,38 @@
 ﻿using GD.App;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 namespace App.Levels.MakingTheMaze
 {
     public class Maze
     {
-        #region Fields
-        public const int mazeWidth = 20;
-        public const int mazeHeight = 20;
+        #region Declarations
+        private Random pickWall = new Random();
+        public MazeCell[,] theMazeCells = new MazeCell[mazeWidth, mazeHeight];
         GraphicsDevice myDevice;
         VertexBuffer floorBuffer;
+
+        Vector3[] pointsOfTheWall = new Vector3[8];
+
         Color[] floorColors = new Color[2]
         {
             Color.White,
             Color.Black,
         };
+
+        Color[] colorOfWalls = new Color[4]
+        {
+            Color.Green,
+            Color.Red,
+            Color.Green,
+            Color.Red
+        };
+        #endregion
+        #region Fields
+        public const int mazeWidth = 20;
+        public const int mazeHeight = 20;
+       
         #endregion
 
         #region Constructor
