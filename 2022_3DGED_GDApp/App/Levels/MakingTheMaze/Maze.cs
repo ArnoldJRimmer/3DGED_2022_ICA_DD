@@ -12,6 +12,7 @@ namespace App.Levels.MakingTheMaze
         public MazeCell[,] theMazeCells = new MazeCell[mazeWidth, mazeHeight];
         GraphicsDevice myDevice;
         VertexBuffer floorBuffer;
+        VertexBuffer wallBuffer;
 
         Vector3[] pointsOfTheWall = new Vector3[8];
 
