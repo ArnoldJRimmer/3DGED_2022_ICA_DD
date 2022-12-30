@@ -125,6 +125,7 @@ namespace GD.App
 
     public class MyGameVariable
     {
-
+        public static readonly int MAZE_WIDTH = 20;
+        public static readonly int MAZE_HEIGHT = 20;
     }
 }

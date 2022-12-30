@@ -9,7 +9,7 @@ namespace App.Levels.MakingTheMaze
     {
         #region Declarations
         private Random pickWall = new Random();
-        public MazeCell[,] theMazeCells = new MazeCell[mazeWidth, mazeHeight];
+        public MazeCell[,] theMazeCells = new MazeCell[MyGameVariable.MAZE_WIDTH, MyGameVariable.MAZE_HEIGHT];
         GraphicsDevice myDevice;
         VertexBuffer floorBuffer;
         VertexBuffer wallBuffer;
@@ -32,8 +32,8 @@ namespace App.Levels.MakingTheMaze
         #endregion
         #region Fields
         //Appdata this
-        public const int mazeWidth = 20;
-        public const int mazeHeight = 20;
+        //public const int mazeWidth = 20;
+       // public const int mazeHeight = 20;
         #endregion
 
         #region Constructor
@@ -41,9 +41,9 @@ namespace App.Levels.MakingTheMaze
         {
             myDevice = _myDevice;
             BuildFloorBuffer();
-            for (int x = 0; x < mazeWidth; x++)
+            for (int x = 0; x < MyGameVariable.MAZE_WIDTH; x++)
             {
-                for (int z = 0; z < mazeHeight; z++)
+                for (int z = 0; z < MyGameVariable.MAZE_HEIGHT; z++)
                 {
                     theMazeCells[x, z] = new MazeCell();
                 }
@@ -69,9 +69,9 @@ namespace App.Levels.MakingTheMaze
         //Here is where we set up the maze, each time we call this we create a maze our of hollowed out cubes, meaning there isn't anywhere to go
         public void GenerateMaze()
         {
-            for (int x = 0; x < mazeWidth; x++)
+            for (int x = 0; x < MyGameVariable.MAZE_WIDTH; x++)
             {
-                for (int z = 0; z < mazeHeight; z++)
+                for (int z = 0; z < MyGameVariable.MAZE_HEIGHT; z++)
                 {
                     theMazeCells[x, z].Walls[0] = true;
                     theMazeCells[x, z].Walls[1] = true;
@@ -129,7 +129,7 @@ namespace App.Levels.MakingTheMaze
 
                 }
 
-                if (nextCell.X >= 0 && nextCell.X < mazeHeight && nextCell.Y >= 0 && nextCell.Y < mazeHeight)
+                if (nextCell.X >= 0 && nextCell.X < MyGameVariable.MAZE_WIDTH && nextCell.Y >= 0 && nextCell.Y < MyGameVariable.MAZE_HEIGHT)
                 {
 
                     if (!theMazeCells[(int)nextCell.X, (int)nextCell.Y].Visited)
@@ -156,9 +156,9 @@ namespace App.Levels.MakingTheMaze
         private void BuildWallBuffer()
         {
             List<VertexPositionColor> wallVertexList = new List<VertexPositionColor>();
-            for (int x = 0; x < mazeWidth; x++)
+            for (int x = 0; x < MyGameVariable.MAZE_WIDTH; x++)
             {
-                for (int z = 0; z < mazeHeight; z++)
+                for (int z = 0; z < MyGameVariable.MAZE_HEIGHT; z++)
                 {
                     //Need to write this method
                     foreach (VertexPositionColor vertex in BuildMazeWall(x, z))
@@ -275,10 +275,10 @@ namespace App.Levels.MakingTheMaze
             List<VertexPositionColor> vertexList = new List<VertexPositionColor>();
             int counter = 0;
 
-            for (int x = 0; x < mazeWidth; x++)
+            for (int x = 0; x < MyGameVariable.MAZE_WIDTH; x++)
             {
                 counter++;
-                for (int z = 0; z < mazeHeight; z++)
+                for (int z = 0; z < MyGameVariable.MAZE_HEIGHT; z++)
                 {
                     counter++;
                     foreach (VertexPositionColor vertex in FloorTile(x, z, floorColors[counter % 2]))

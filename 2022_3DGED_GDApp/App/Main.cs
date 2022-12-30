@@ -92,12 +92,12 @@ namespace GD.App
 
                 //We check to see if the player is within the bounds of the floor
                 //If they are they can move, else they can't
-                if (newLocation.X < 0 || newLocation.X > Maze.mazeWidth)
+                if (newLocation.X < 0 || newLocation.X > MyGameVariable.MAZE_WIDTH)
                 {
                     allowMovement = false;
                 }
 
-                if (newLocation.Z < 0 || newLocation.Z > Maze.mazeHeight)
+                if (newLocation.Z < 0 || newLocation.Z > MyGameVariable.MAZE_HEIGHT)
                 {
                     allowMovement = false;
                 }
