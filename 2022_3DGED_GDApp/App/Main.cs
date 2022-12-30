@@ -105,6 +105,7 @@ namespace GD.App
                     allowMovement = false;
                 }
 
+                //Here I add each bounding box to each of the walls, if a wall exists in this location i also don't allow the player to move here
                 foreach (BoundingBox box in theLevel.GetBoundingForMazeCell((int)newLocation.X, (int)newLocation.Z))
                 {
                     if (box.Contains(newLocation) == ContainmentType.Contains)
