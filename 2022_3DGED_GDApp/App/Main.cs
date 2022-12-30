@@ -102,6 +102,14 @@ namespace GD.App
                     allowMovement = false;
                 }
 
+                foreach (BoundingBox box in theLevel.GetBoundingForMazeCell((int)newLocation.X, (int)newLocation.Z))
+                {
+                    if (box.Contains(newLocation) == ContainmentType.Contains)
+                    {
+                        allowMovement = false;
+                    }
+                }
+
                 if (allowMovement)
                 {
                     playerCamera.MoveForward(moveAmount);
