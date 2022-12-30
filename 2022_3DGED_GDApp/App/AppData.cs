@@ -127,5 +127,8 @@ namespace GD.App
     {
         public static readonly int MAZE_WIDTH = 20;
         public static readonly int MAZE_HEIGHT = 20;
+
     }
+
+    
 }

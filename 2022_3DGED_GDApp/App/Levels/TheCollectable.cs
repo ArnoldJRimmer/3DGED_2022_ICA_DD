@@ -92,7 +92,7 @@ namespace GD.App
             Vector3 newLocation;
             do
             {
-                newLocation = new Vector3(randPos.Next(0,MyGameVariable.MAZE_WIDTH) + 0.5f, 0.5f, randPos.Next(0, MyGameVariable.MAZE_HEIGHT) + 0.5f);
+                newLocation = new Vector3(randPos.Next(0, MyGameVariable.MAZE_WIDTH) + 0.5f, 0.5f, randPos.Next(0, MyGameVariable.MAZE_HEIGHT) + 0.5f);
             }
             while (Vector3.Distance(playerLocation, newLocation) < minDistance);
             {
