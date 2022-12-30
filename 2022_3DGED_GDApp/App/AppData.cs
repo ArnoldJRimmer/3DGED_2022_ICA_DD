@@ -122,4 +122,9 @@ namespace GD.App
 
         #endregion
     }
+
+    public class MyGameVariable
+    {
+
+    }
 }
