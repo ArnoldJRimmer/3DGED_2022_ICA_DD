@@ -50,7 +50,7 @@ namespace App.Levels.MakingTheMaze
 
             GenerateMaze();
 
-            //Here i make up each face of the wall using the verts
+            //I create a cube that i will use to make up any four walls in my maze 
             pointsOfTheWall[0] = new Vector3(0, 1, 0);
             pointsOfTheWall[1] = new Vector3(0, 1, 1);
             pointsOfTheWall[2] = new Vector3(0, 0, 0);
@@ -64,6 +64,83 @@ namespace App.Levels.MakingTheMaze
         }
         #endregion
 
+        /// <summary>
+        /// I create the walls for the maze by using these eight 
+        /// points.,from these i create triangles and then offsett their locations to move them to the appropriate
+        /// position within my maze. As each wall in my mace can consist of any of these 4 points.
+        /// </summary>
+        #region Walls
+        //Loops through each of the cells in my maze and calls BuildMazeWall
+        private void BuildWallBuffer()
+        {
+            List<VertexPositionColor> wallVertexList = new List<VertexPositionColor>();
+            for (int x = 0; x < mazeWidth; x++)
+            {
+                for (int z = 0; z < mazeHeight; z++)
+                {
+                    //Need to write this method
+                    foreach (VertexPositionColor vertex in BuildMazeWall(x, z))
+                    {
+                        wallVertexList.Add(vertex);
+                    }
+                }
+            }
+
+            wallBuffer = new VertexBuffer(myDevice, VertexPositionColor.VertexDeclaration, wallVertexList.Count, BufferUsage.WriteOnly);
+            wallBuffer.SetData<VertexPositionColor>(wallVertexList.ToArray());
+        }
+
+        //Because our graphics cards look things in groups we get all the trianlges we need together to make the walls, which we then store in the wallBuffer 
+        private List<VertexPositionColor> BuildMazeWall(int x, int z)
+        {
+            List<VertexPositionColor> triangleThatMakeUpWalls = new List<VertexPositionColor>();
+            if (theMazeCells[x, z].Walls[0])
+            {
+                triangleThatMakeUpWalls.Add(CalculatePoints(0, x, z, colorOfWalls[0]));
+                triangleThatMakeUpWalls.Add(CalculatePoints(4, x, z, colorOfWalls[0]));
+                triangleThatMakeUpWalls.Add(CalculatePoints(2, x, z, colorOfWalls[0]));
+                triangleThatMakeUpWalls.Add(CalculatePoints(4, x, z, colorOfWalls[0]));
+                triangleThatMakeUpWalls.Add(CalculatePoints(6, x, z, colorOfWalls[0]));
+                triangleThatMakeUpWalls.Add(CalculatePoints(2, x, z, colorOfWalls[0]));
+            }
+
+            if (theMazeCells[x, z].Walls[1])
+            {
+                triangleThatMakeUpWalls.Add(CalculatePoints(4, x, z, colorOfWalls[1]));
+                triangleThatMakeUpWalls.Add(CalculatePoints(5, x, z, colorOfWalls[1]));
+                triangleThatMakeUpWalls.Add(CalculatePoints(6, x, z, colorOfWalls[1]));
+                triangleThatMakeUpWalls.Add(CalculatePoints(5, x, z, colorOfWalls[1]));
+                triangleThatMakeUpWalls.Add(CalculatePoints(7, x, z, colorOfWalls[1]));
+                triangleThatMakeUpWalls.Add(CalculatePoints(6, x, z, colorOfWalls[1]));
+            }
+
+            if (theMazeCells[x, z].Walls[2])
+            {
+                triangleThatMakeUpWalls.Add(CalculatePoints(5, x, z, colorOfWalls[2]));
+                triangleThatMakeUpWalls.Add(CalculatePoints(1, x, z, colorOfWalls[2]));
+                triangleThatMakeUpWalls.Add(CalculatePoints(7, x, z, colorOfWalls[2]));
+                triangleThatMakeUpWalls.Add(CalculatePoints(1, x, z, colorOfWalls[2]));
+                triangleThatMakeUpWalls.Add(CalculatePoints(3, x, z, colorOfWalls[2]));
+                triangleThatMakeUpWalls.Add(CalculatePoints(7, x, z, colorOfWalls[2]));
+            }
+
+            if (theMazeCells[x, z].Walls[3])
+            {
+                triangleThatMakeUpWalls.Add(CalculatePoints(1, x, z, colorOfWalls[3]));
+                triangleThatMakeUpWalls.Add(CalculatePoints(0, x, z, colorOfWalls[3]));
+                triangleThatMakeUpWalls.Add(CalculatePoints(3, x, z, colorOfWalls[3]));
+                triangleThatMakeUpWalls.Add(CalculatePoints(0, x, z, colorOfWalls[3]));
+                triangleThatMakeUpWalls.Add(CalculatePoints(2, x, z, colorOfWalls[3]));
+                triangleThatMakeUpWalls.Add(CalculatePoints(3, x, z, colorOfWalls[3]));
+            }
+
+            return triangleThatMakeUpWalls;
+        }
+
+        private VertexPositionColor CalculatePoints(int wallPoint, int x_OffSet, int z_OffSet, Color colorOfTriangles)
+        {
+            return new VertexPositionColor(pointsOfTheWall[wallPoint] + new Vector3(x_OffSet, 0, z_OffSet), colorOfTriangles);
+        }
         #region The Floor
         private void BuildFloorBuffer()
         {
