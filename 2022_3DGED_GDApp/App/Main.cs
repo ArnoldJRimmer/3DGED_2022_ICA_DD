@@ -14,11 +14,14 @@ namespace GD.App
 {
     public class Main : Game
     {
+        #region Declarations
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private FpsCamera playerCamera;
         private Maze theLevel;
         private BasicEffect basicEffect;
+        #endregion
+
         float moveScale = 1.5f;
         float rotateScale = MathHelper.PiOver2;
 
