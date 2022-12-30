@@ -30,11 +30,6 @@ namespace App.Levels.MakingTheMaze
             Color.Red
         };
         #endregion
-        #region Fields
-        //Appdata this
-        //public const int mazeWidth = 20;
-       // public const int mazeHeight = 20;
-        #endregion
 
         #region Constructor
         public Maze(GraphicsDevice _myDevice)
