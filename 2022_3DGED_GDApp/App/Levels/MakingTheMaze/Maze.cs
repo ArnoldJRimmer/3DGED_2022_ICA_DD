@@ -271,6 +271,7 @@ namespace App.Levels.MakingTheMaze
         #region Draw
         public void Draw(FpsCamera fpCamera, BasicEffect effect)
         {
+            effect.TextureEnabled = false;
             effect.VertexColorEnabled = true;
             effect.World = Matrix.Identity;
             effect.View = fpCamera.View;
@@ -281,6 +282,9 @@ namespace App.Levels.MakingTheMaze
                 pass.Apply();
                 myDevice.SetVertexBuffer(floorBuffer);
                 myDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, floorBuffer.VertexCount / 3);
+
+                myDevice.SetVertexBuffer(wallBuffer);
+                myDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, wallBuffer.VertexCount / 3);
             }
         }
         #endregion
