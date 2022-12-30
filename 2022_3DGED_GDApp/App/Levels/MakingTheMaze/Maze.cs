@@ -40,6 +40,27 @@ namespace App.Levels.MakingTheMaze
         {
             myDevice = _myDevice;
             BuildFloorBuffer();
+            for (int x = 0; x < mazeWidth; x++)
+            {
+                for (int z = 0; z < mazeHeight; z++)
+                {
+                    theMazeCells[x, z] = new MazeCell();
+                }
+            }
+
+            GenerateMaze();
+
+            //Here i make up each face of the wall using the verts
+            pointsOfTheWall[0] = new Vector3(0, 1, 0);
+            pointsOfTheWall[1] = new Vector3(0, 1, 1);
+            pointsOfTheWall[2] = new Vector3(0, 0, 0);
+            pointsOfTheWall[3] = new Vector3(0, 0, 1);
+            pointsOfTheWall[4] = new Vector3(1, 1, 0);
+            pointsOfTheWall[5] = new Vector3(1, 1, 1);
+            pointsOfTheWall[6] = new Vector3(1, 0, 0);
+            pointsOfTheWall[7] = new Vector3(1, 0, 1);
+
+            BuildWallBuffer();
         }
         #endregion
 
