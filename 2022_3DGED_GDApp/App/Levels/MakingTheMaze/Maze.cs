@@ -223,6 +223,50 @@ namespace App.Levels.MakingTheMaze
         {
             return new VertexPositionColor(pointsOfTheWall[wallPoint] + new Vector3(x_OffSet, 0, z_OffSet), colorOfTriangles);
         }
+
+        private BoundingBox BuildBoundingBox(int x, int z, int point1, int point2)
+        {
+            BoundingBox myBox = new BoundingBox(pointsOfTheWall[point1], pointsOfTheWall[point2]);
+            myBox.Min.X += x;
+            myBox.Min.Z += z;
+            myBox.Max.X += x;
+            myBox.Max.Z += z;
+
+            myBox.Min.X -= 0.1f;
+            myBox.Min.Z -= 0.1f;
+            myBox.Max.X += 0.1f;
+            myBox.Max.Z += 0.1f;
+
+            return myBox;
+
+        }
+
+        public List<BoundingBox> GetBoundingForMazeCell(int x, int z)
+        {
+            List<BoundingBox> boundingBoxes = new List<BoundingBox>();
+
+            if (theMazeCells[x, z].Walls[0])
+            {
+                boundingBoxes.Add(BuildBoundingBox(x, z, 2, 4));
+            }
+
+            if (theMazeCells[x, z].Walls[1])
+            {
+                boundingBoxes.Add(BuildBoundingBox(x, z, 6, 5));
+            }
+
+            if (theMazeCells[x, z].Walls[2])
+            {
+                boundingBoxes.Add(BuildBoundingBox(x, z, 3, 5));
+            }
+
+            if (theMazeCells[x, z].Walls[3])
+            {
+                boundingBoxes.Add(BuildBoundingBox(x, z, 2, 1));
+            }
+
+            return boundingBoxes;
+        }
         #endregion
 
         #region The Floor
@@ -266,7 +310,6 @@ namespace App.Levels.MakingTheMaze
         }
 
         #endregion
-
 
         #region Draw
         public void Draw(FpsCamera fpCamera, BasicEffect effect)
