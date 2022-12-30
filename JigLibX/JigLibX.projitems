@@ -74,5 +74,6 @@
   <ItemGroup>
     <MonoGameContentReference Include="$(MSBuildThisFileDirectory)Content\Content.mgcb" />
     <None Include="$(MSBuildThisFileDirectory)Content\Content.mgcb" />
+    <None Include="$(MSBuildThisFileDirectory)istockphoto-1041726656-612x612.jpg" />
   </ItemGroup>
 </Project>

@@ -18,12 +18,15 @@ namespace GD.App
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private FpsCamera playerCamera;
+        TheCollectable floatyCube;
         private Maze theLevel;
         private BasicEffect basicEffect;
         #endregion
 
         float moveScale = 1.5f;
         float rotateScale = MathHelper.PiOver2;
+        private float lastScoreTime;
+        private int score;
 
         public Main()
         {
@@ -44,6 +47,7 @@ namespace GD.App
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            floatyCube = new TheCollectable(this.GraphicsDevice, playerCamera.Position, 10f, Content.Load<Texture2D>("Assets/Textures/MyTextures/collectable"));
             // TODO: use this.Content to load your game content here
         }
 
@@ -118,8 +122,25 @@ namespace GD.App
                 {
                     playerCamera.MoveForward(moveAmount);
                 }
+
+                if (floatyCube.colliable.Contains(playerCamera.Position) == ContainmentType.Contains)
+                {
+                    floatyCube.PositionCollectable(playerCamera.Position, 5f);
+                    float thisTime = (float)gameTime.TotalGameTime.TotalSeconds;
+                    float scoreTime = thisTime - lastScoreTime;
+                    score += 1000;
+
+                    if (scoreTime < 120)
+                    {
+                        score += (120 - (int)scoreTime * 100);
+                    }
+                    lastScoreTime = scoreTime;
+
+                }
+                
             }
 
+            floatyCube.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -127,6 +148,7 @@ namespace GD.App
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             theLevel.Draw(playerCamera, basicEffect);
+            floatyCube.Draw(playerCamera, basicEffect);
             // TODO: Add your drawing code here
             base.Draw(gameTime);
         }
