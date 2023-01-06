@@ -67,10 +67,14 @@ namespace GD.App
 
             //Title Screen
             startMenu = Content.Load<Texture2D>("Assets/Textures/MyTextures/StartMenu");
+            LoadSounds();
+        }
+        private void LoadSounds()
+        {
             startSong = Content.Load<Song>("Assets/Audio/Non-Diegetic/StartMenu_Audio");
             MediaPlayer.Play(startSong);
+            MediaPlayer.IsRepeating = true;
         }
-
         protected override void Update(GameTime gameTime)
         {
 
@@ -169,7 +173,7 @@ namespace GD.App
 
                 }
 
-              
+                floatyCube.Update(gameTime);
             }
            
             base.Update(gameTime);
@@ -189,11 +193,11 @@ namespace GD.App
             else
             {
                 
-                theLevel.Draw(playerCamera, basicEffect);
-                floatyCube.Draw(playerCamera, basicEffect);
+                //theLevel.Draw(playerCamera, basicEffect);
                 this.Window.Title = score.ToString();
             }
-           
+
+            floatyCube.Draw(playerCamera, basicEffect);
             base.Draw(gameTime);
         }
     }
