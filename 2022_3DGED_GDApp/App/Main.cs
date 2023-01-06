@@ -6,9 +6,13 @@
 #endregion
 using App.Levels.MakingTheMaze;
 using GD.Engine;
+using GD.Engine.Globals;
+using Microsoft.VisualBasic.Devices;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
+using Keyboard = Microsoft.Xna.Framework.Input.Keyboard;
 
 namespace GD.App
 {
@@ -22,6 +26,7 @@ namespace GD.App
         private Maze theLevel;
         private BasicEffect basicEffect;
         private Texture2D startMenu;
+        private Song startSong;
         enum GameState
         {
             TitleScreen,
@@ -62,7 +67,7 @@ namespace GD.App
 
             //Title Screen
             startMenu = Content.Load<Texture2D>("Assets/Textures/MyTextures/StartMenu");
-           
+            startSong = Content.Load<Song>("Assets/Audio/Non-Diegetic/StartMenu_Audio");
         }
 
         protected override void Update(GameTime gameTime)
@@ -172,14 +177,17 @@ namespace GD.App
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+            
             if (isActive == false)
             {
                 _spriteBatch.Begin();
                 _spriteBatch.Draw(startMenu, Vector2.Zero, Color.White);
                 _spriteBatch.End();
+                MediaPlayer.Play(startSong);
             }
             else
             {
+                
                 theLevel.Draw(playerCamera, basicEffect);
                 floatyCube.Draw(playerCamera, basicEffect);
                 this.Window.Title = score.ToString();
