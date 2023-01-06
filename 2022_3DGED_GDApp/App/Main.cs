@@ -61,7 +61,8 @@ namespace GD.App
             floatyCube = new TheCollectable(this.GraphicsDevice, playerCamera.Position, 10f, Content.Load<Texture2D>("Assets/Textures/MyTextures/collectable"));
 
             //Title Screen
-            startMenu = Content.Load<Texture2D>("Assets/Textures/MyTextures/collectable");
+            startMenu = Content.Load<Texture2D>("Assets/Textures/MyTextures/StartMenu");
+           
         }
 
         protected override void Update(GameTime gameTime)
@@ -77,8 +78,10 @@ namespace GD.App
                 isActive = true;
             }
 
+            //The core fucntionality of the game
             if (isActive == true)
             {
+               
                 float moveAmount = 0;
 
                 //Rotates the camera to the right
@@ -165,17 +168,23 @@ namespace GD.App
             base.Update(gameTime);
         }
 
-        private void InGameInput(float timeElapsed,GameTime inGameTime)
-        {
-
-        }
-
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            theLevel.Draw(playerCamera, basicEffect);
-            floatyCube.Draw(playerCamera, basicEffect);
-            this.Window.Title = score.ToString();
+            GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+            if (isActive == false)
+            {
+                _spriteBatch.Begin();
+                _spriteBatch.Draw(startMenu, Vector2.Zero, Color.White);
+                _spriteBatch.End();
+            }
+            else
+            {
+                theLevel.Draw(playerCamera, basicEffect);
+                floatyCube.Draw(playerCamera, basicEffect);
+                this.Window.Title = score.ToString();
+            }
+           
             base.Draw(gameTime);
         }
     }

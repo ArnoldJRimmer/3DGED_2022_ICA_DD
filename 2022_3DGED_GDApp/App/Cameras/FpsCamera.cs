@@ -47,7 +47,7 @@ namespace GD.App
         }
 
         /// <summary>
-        /// I have a storing mechanism in place so that everytime the view matrix is calculated,#
+        /// I have a storing mechanism in place so that everytime the view matrix is calculated,
         /// i can store it and get at easyily if needed.
         /// The view matirx takes in the camera position, the point we just looked at and a vector telling us the direction of UP for the camera
         /// </summary>

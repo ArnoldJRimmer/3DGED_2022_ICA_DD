@@ -486,7 +486,7 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Textures/MyTextures/collectable.jpg
 
-#begin Assets/Textures/MyTextures/collectable.jpg
+#begin Assets/Textures/MyTextures/StartMenu.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -496,7 +496,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Assets/Textures/MyTextures/collectable.jpg
+/build:Assets/Textures/MyTextures/StartMenu.png
 
 #begin Assets/Textures/Props/Crates/crate1.jpg
 /importer:TextureImporter
