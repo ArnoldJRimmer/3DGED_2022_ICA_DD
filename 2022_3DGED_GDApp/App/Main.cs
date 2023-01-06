@@ -68,6 +68,7 @@ namespace GD.App
             //Title Screen
             startMenu = Content.Load<Texture2D>("Assets/Textures/MyTextures/StartMenu");
             startSong = Content.Load<Song>("Assets/Audio/Non-Diegetic/StartMenu_Audio");
+            MediaPlayer.Play(startSong);
         }
 
         protected override void Update(GameTime gameTime)
@@ -81,6 +82,7 @@ namespace GD.App
             if (keyState.IsKeyDown(Keys.Space))
             {
                 isActive = true;
+                
             }
 
             //The core fucntionality of the game
@@ -183,7 +185,6 @@ namespace GD.App
                 _spriteBatch.Begin();
                 _spriteBatch.Draw(startMenu, Vector2.Zero, Color.White);
                 _spriteBatch.End();
-                MediaPlayer.Play(startSong);
             }
             else
             {
