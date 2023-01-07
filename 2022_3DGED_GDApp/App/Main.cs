@@ -8,8 +8,10 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using SharpDX.MediaFoundation;
 using System;
 using Keyboard = Microsoft.Xna.Framework.Input.Keyboard;
+using Mouse = Microsoft.Xna.Framework.Input.Mouse;
 
 namespace GD.App
 {
@@ -20,13 +22,17 @@ namespace GD.App
         private SpriteBatch _spriteBatch;
         private SpriteFont scoreFont;
         private FpsCamera playerCamera;
-        private CameraManager cameraManager;
+        private Curve_Camera curveCamera;
         TheCollectable floatyCube;
         private Maze theLevel;
         private BasicEffect basicEffect;
         private Texture2D startMenu;
         private Song startSong;
         private Song pickUp;
+        Point centerOfScreen;
+        Point saveMousePoint;
+        float scrollRate = 1f;
+        MouseState prevMouse;
         #endregion
 
         #region Fields
@@ -35,6 +41,8 @@ namespace GD.App
         private float moveAmount;
         private bool isActive = false;
         private bool stopDrawing = false;
+        private bool allowMouseMove = false;
+        private bool enableMouseView = false;
         #endregion
 
         #region Main
@@ -42,6 +50,7 @@ namespace GD.App
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            this.IsMouseVisible = true;
         }
         #endregion
 
@@ -54,42 +63,32 @@ namespace GD.App
                 GraphicsDevice.Viewport.AspectRatio, 
                 MyGameVariable.FIRST_PERSON_CAMERA_NCP,
                 MyGameVariable.FIRST_PERSON_CAMERA_FCP);
+
+            curveCamera = new Curve_Camera(new Vector3(0f,0f,0f),
+                MathHelper.ToRadians(2),
+                0f,
+                10f,
+                60f,
+                20f,
+                GraphicsDevice.Viewport.AspectRatio,
+                0.1f,
+                512f);
+                
             basicEffect = new BasicEffect(GraphicsDevice);
             theLevel = new Maze(GraphicsDevice);
-            //InitilaiszeCurveCamera();
+           
+            centerOfScreen.X = this.Window.ClientBounds.Width / 2;
+            centerOfScreen.Y = this.Window.ClientBounds.Height / 2;
+
+            this.IsMouseVisible = true;
+            prevMouse = Mouse.GetState();
+            Mouse.SetPosition(centerOfScreen.X, centerOfScreen.Y);
+
 
             base.Initialize();
         }
         #endregion
 
-        //private void InitilaiszeCurveCamera()
-        //{
-        //    GameObject cameraGameObject = null;
-        //    Curve3D curve3D = new Curve3D(CurveLoopType.Oscillate);
-        //    curve3D.Add(new Vector3(0, 2, 5), 0);
-        //    curve3D.Add(new Vector3(0, 5, 10), 1000);
-        //    curve3D.Add(new Vector3(0, 8, 25), 2500);
-        //    curve3D.Add(new Vector3(0, 5, 35), 4000);
-
-        //    cameraGameObject = new GameObject(AppData.CURVE_CAMERA_NAME);
-        //    cameraGameObject.Transform =
-        //        new Transform(null, null, null);
-        //    cameraGameObject.AddComponent(new Camera(
-        //        MathHelper.PiOver2 / 2,
-        //        (float)_graphics.PreferredBackBufferWidth / _graphics.PreferredBackBufferHeight,
-        //        0.1f, 3500,
-        //          new Viewport(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight)));
-
-        //    //define what action the curve will apply to the target game object
-        //    var curveAction = (Curve3D curve, GameObject target, GameTime gameTime) =>
-        //    {
-        //        target.Transform.SetTranslation(curve.Evaluate(gameTime.TotalGameTime.TotalMilliseconds, 4));
-        //    };
-
-        //    cameraGameObject.AddComponent(new CurveBehaviour(curve3D, curveAction));
-        //    cameraManager.Add(cameraGameObject.Name, cameraGameObject);
-        //    cameraManager.SetActiveCamera(AppData.FIRST_PERSON_CAMERA_NAME);
-        //}
 
         #region LoadContent
         protected override void LoadContent()
@@ -132,6 +131,11 @@ namespace GD.App
             float timeElapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
             KeyboardState keyState = Keyboard.GetState();
 
+            if (this.isActive)
+            {
+               
+            }
+
             //Starts the game
             if (keyState.IsKeyDown(Keys.Space) && score!=MyGameVariable.END_SCORE && time > 0)
             {
@@ -169,6 +173,53 @@ namespace GD.App
                 if (keyState.IsKeyDown(Keys.Down))
                 {
                     moveAmount = -MyGameVariable.MOVE_SCALE * timeElapsed;
+                }
+
+                if (keyState.IsKeyDown(Keys.F1))
+                {
+                    enableMouseView = true;
+                    MouseState mouse = Mouse.GetState();
+                    if (allowMouseMove)
+                    {
+                        curveCamera.Rotation += MathHelper.ToRadians((mouse.X - centerOfScreen.X) / 2f);
+                        curveCamera.Elevation += MathHelper.ToRadians((mouse.Y - centerOfScreen.Y) / 2f);
+                        Mouse.SetPosition(centerOfScreen.X, centerOfScreen.Y);
+                    }
+
+                    if (mouse.RightButton == ButtonState.Pressed)
+                    {
+                        if (!allowMouseMove && prevMouse.RightButton == ButtonState.Released)
+                        {
+                            if (_graphics.GraphicsDevice.Viewport.Bounds.Contains(new Point(mouse.X, mouse.Y)))
+                            {
+                                allowMouseMove = true;
+                                saveMousePoint.X = mouse.X;
+                                saveMousePoint.Y = mouse.Y;
+                                Mouse.SetPosition(centerOfScreen.X, centerOfScreen.Y);
+                                this.IsMouseVisible = false;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (allowMouseMove)
+                        {
+                            allowMouseMove = false;
+                            Mouse.SetPosition(saveMousePoint.X, saveMousePoint.Y);
+                            this.IsMouseVisible = true;
+                        }
+                    }
+
+                    if (mouse.ScrollWheelValue - prevMouse.ScrollWheelValue != 0)
+                    {
+                        float wheelChange = mouse.ScrollWheelValue - prevMouse.ScrollWheelValue;
+                        curveCamera.ViewDistance -= (wheelChange / 120) * scrollRate;
+                    }
+                    prevMouse = mouse;
+                }
+                else
+                {
+                    enableMouseView = false;
                 }
 
                 //Turns off the maze to make it easier
@@ -262,6 +313,7 @@ namespace GD.App
             }
             else
             {
+                
                 if (stopDrawing && score != MyGameVariable.END_SCORE && time > 0)
                 {
                     //theLevel.Draw(playerCamera, basicEffect);
@@ -300,7 +352,14 @@ namespace GD.App
 
                 }
 
+                if (enableMouseView)
+                {
+                    theLevel.Draw(curveCamera, basicEffect);
+                }
+
             }
+
+           
 
         }
         #endregion

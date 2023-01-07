@@ -325,6 +325,25 @@ namespace GD.App
                 myDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, wallBuffer.VertexCount / 3);
             }
         }
+
+        public void Draw(Curve_Camera fpCamera, BasicEffect effect)
+        {
+            effect.TextureEnabled = false;
+            effect.VertexColorEnabled = true;
+            effect.World = Matrix.Identity;
+            effect.View = fpCamera.View;
+            effect.Projection = fpCamera.Projection;
+
+            foreach (EffectPass pass in effect.CurrentTechnique.Passes)
+            {
+                pass.Apply();
+                myDevice.SetVertexBuffer(floorBuffer);
+                myDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, floorBuffer.VertexCount / 3);
+
+                myDevice.SetVertexBuffer(wallBuffer);
+                myDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, wallBuffer.VertexCount / 3);
+            }
+        }
         #endregion
     }
 }
