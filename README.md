@@ -10,18 +10,20 @@ This repository contains code for the game Maze_Runner_2.0
 - [x] Add walls to the maze(Vrtx Buffers and Verts Buffer)
 - [x] Make walls colliable
 - [x] Create the collectable(Cube,Sphere,Prism)
+- [x] Add the colliable to the game
+- [x] Add score to the game
+- [x] Add a start menu
+- [x] Add ingame music
+- [x] Add every time cube is picked up, the maze changes
+- [x] Add menu music
 
 
 ### Tasked That need to be completed
-- [ ] Add the colliable to the game
-- [ ] Add score to the game
 - [ ] Add a timer to the game
-- [ ] Add every time cube is picked up, the maze changes
+- [ ] Add Ui element timer to screen
+- [ ] Add Ui element for score on screen
 - [ ] Add overview rotating camera
-- [ ] Add a start menu
-- [ ] Add ingame music
 - [ ] Add pickUp Sound
-- [ ] Add menu music
 - [ ] Create a gameOver state
 
 
