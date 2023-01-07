@@ -20,14 +20,16 @@ This repository contains code for the game Maze_Runner_2.0
 - [x] Create a gameOver state(Win)
 - [x] Add a timer to the game
 - [x] Add Ui element timer to screen
+- [x] Add overview rotating camera
+- [x] Add gameOver state (lose)
 
 ### Tasked That need to be completed
-- [ ] Add overview rotating camera
 - [ ] Add pickUp Sound
-- [ ] Add gameOver state (lose)
+- [ ] Fix the rotation of the mouse
+- [ ] add cube being drawn onto map
 - [ ] Add references to music used
 - [ ] Add references to textures used
 
-
+### References for Material Use
 
 
