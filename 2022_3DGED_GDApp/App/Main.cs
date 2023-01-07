@@ -63,27 +63,28 @@ namespace GD.App
                 GraphicsDevice.Viewport.AspectRatio, 
                 MyGameVariable.FIRST_PERSON_CAMERA_NCP,
                 MyGameVariable.FIRST_PERSON_CAMERA_FCP);
+            #region Curve Camera
+            curveCamera = new Curve_Camera(new Vector3(0f, 0f, 0f),
+               MathHelper.ToRadians(2),
+               0f,
+               10f,
+               60f,
+               20f,
+               GraphicsDevice.Viewport.AspectRatio,
+               0.1f,
+               512f);
 
-            curveCamera = new Curve_Camera(new Vector3(0f,0f,0f),
-                MathHelper.ToRadians(2),
-                0f,
-                10f,
-                60f,
-                20f,
-                GraphicsDevice.Viewport.AspectRatio,
-                0.1f,
-                512f);
-                
-            basicEffect = new BasicEffect(GraphicsDevice);
-            theLevel = new Maze(GraphicsDevice);
-           
             centerOfScreen.X = this.Window.ClientBounds.Width / 2;
             centerOfScreen.Y = this.Window.ClientBounds.Height / 2;
 
             this.IsMouseVisible = true;
             prevMouse = Mouse.GetState();
             Mouse.SetPosition(centerOfScreen.X, centerOfScreen.Y);
+            #endregion
 
+            basicEffect = new BasicEffect(GraphicsDevice);
+            theLevel = new Maze(GraphicsDevice);
+           
 
             base.Initialize();
         }
@@ -131,10 +132,6 @@ namespace GD.App
             float timeElapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
             KeyboardState keyState = Keyboard.GetState();
 
-            if (this.isActive)
-            {
-               
-            }
 
             //Starts the game
             if (keyState.IsKeyDown(Keys.Space) && score!=MyGameVariable.END_SCORE && time > 0)
@@ -175,6 +172,7 @@ namespace GD.App
                     moveAmount = -MyGameVariable.MOVE_SCALE * timeElapsed;
                 }
 
+                #region Press F1 To See Mouse View
                 if (keyState.IsKeyDown(Keys.F1))
                 {
                     enableMouseView = true;
@@ -221,6 +219,7 @@ namespace GD.App
                 {
                     enableMouseView = false;
                 }
+                #endregion
 
                 //Turns off the maze to make it easier
                 if (keyState.IsKeyDown(Keys.M))
@@ -352,6 +351,7 @@ namespace GD.App
 
                 }
 
+                //Mouse View
                 if (enableMouseView)
                 {
                     theLevel.Draw(curveCamera, basicEffect);
