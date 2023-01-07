@@ -34,7 +34,6 @@ namespace GD.App
         #endregion
 
         #region Fields
-        private float lastScoreTime;
         private int score;
         private float moveAmount;
         private bool isActive = false;
@@ -231,16 +230,7 @@ namespace GD.App
         #region Helper Methods
         private void CalculateScore(GameTime gameTime)
         {
-            float thisTime = (float)gameTime.TotalGameTime.TotalSeconds;
-            float scoreTime = thisTime - lastScoreTime;
             score += 1000;
-
-
-            if (scoreTime < 120)
-            {
-                score += (120 - (int)scoreTime * 100);
-            }
-            lastScoreTime = scoreTime;
         }
         #endregion
 
