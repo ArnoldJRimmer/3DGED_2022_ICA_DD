@@ -8,16 +8,18 @@ namespace GD.App
 {
   public class TheCollectable
   {
-
-        #region Fields
+        #region Declarations
         GraphicsDevice myDevice;
         private Texture2D myTexture;
         private Vector3 location;
         private VertexBuffer collectableVertexBuffer;
         private List<VertexPositionTexture> verts = new List<VertexPositionTexture>();
+        private Random randPos = new Random();
+        #endregion
+
+        #region Fields
         private float rotation = 0f;
         private float z_Rotation = 0f;
-        private Random randPos = new Random();
         private const float collisionRadius = 0.25f;
         #endregion
 

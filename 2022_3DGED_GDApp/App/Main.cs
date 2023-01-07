@@ -1,10 +1,4 @@
-﻿#region Pre-compiler directives
-
-#define DEMO
-#define SHOW_DEBUG_INFO
-
-#endregion
-using App.Levels.MakingTheMaze;
+﻿
 using GD.Engine;
 using GD.Engine.Globals;
 using Microsoft.VisualBasic.Devices;
@@ -37,6 +31,7 @@ namespace GD.App
 
         GameState currentGameState = GameState.TitleScreen;
         #endregion
+
         #region Fields
         float moveScale = 1.5f;
         float rotateScale = MathHelper.PiOver2;
@@ -46,12 +41,15 @@ namespace GD.App
         private bool stopDrawing = false;
         #endregion
 
+        #region Main
         public Main()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
+        #endregion
 
+        #region Initialize
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
@@ -60,24 +58,31 @@ namespace GD.App
             theLevel = new Maze(GraphicsDevice);
             base.Initialize();
         }
+        #endregion
 
+        #region LoadContent
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-           
+            //The collectable
             floatyCube = new TheCollectable(this.GraphicsDevice, playerCamera.Position, 10f, Content.Load<Texture2D>("Assets/Textures/MyTextures/collectable"));
 
             //Title Screen
             startMenu = Content.Load<Texture2D>("Assets/Textures/MyTextures/StartMenu");
             LoadSounds();
         }
+        #endregion
+
+        #region LoadSounds
         private void LoadSounds()
         {
             startSong = Content.Load<Song>("Assets/Audio/Non-Diegetic/StartMenu_Audio");
             MediaPlayer.Play(startSong);
             MediaPlayer.IsRepeating = true;
         }
+        #endregion
 
+        #region Update
         protected override void Update(GameTime gameTime)
         {
 
@@ -187,12 +192,14 @@ namespace GD.App
             #endregion
 
         }
+        #endregion
 
+        #region Draw
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             GraphicsDevice.DepthStencilState = DepthStencilState.Default;
-            
+
             if (isActive == false)
             {
                 _spriteBatch.Begin();
@@ -216,6 +223,7 @@ namespace GD.App
             floatyCube.Draw(playerCamera, basicEffect);
             base.Draw(gameTime);
         }
+        #endregion
 
         #region Helper Methods
         private void CalculateScore(GameTime gameTime)
