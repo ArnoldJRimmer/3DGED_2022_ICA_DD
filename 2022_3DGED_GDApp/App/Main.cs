@@ -34,12 +34,9 @@ namespace GD.App
         #endregion
 
         #region Fields
-        //Appdata these
-        float moveScale = 1.5f;
-        float rotateScale = MathHelper.PiOver2;
         private float lastScoreTime;
         private int score;
-        ////////////////////
+        private float moveAmount;
         private bool isActive = false;
         private bool stopDrawing = false;
         #endregion
@@ -56,7 +53,11 @@ namespace GD.App
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            playerCamera = new FpsCamera(new Vector3(0.5f, 0.5f, 0.5f), 0, GraphicsDevice.Viewport.AspectRatio, 0.05f, 100f);
+            playerCamera = new FpsCamera(MyGameVariable.FIRST_PERSON_DEFAULT_CAMERA_POSITION,
+                0, 
+                GraphicsDevice.Viewport.AspectRatio, 
+                MyGameVariable.FIRST_PERSON_CAMERA_NCP,
+                MyGameVariable.FIRST_PERSON_CAMERA_FCP);
             basicEffect = new BasicEffect(GraphicsDevice);
             theLevel = new Maze(GraphicsDevice);
             base.Initialize();
@@ -68,7 +69,7 @@ namespace GD.App
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             //The collectable
-            floatyCube = new TheCollectable(this.GraphicsDevice, playerCamera.Position, 10f, Content.Load<Texture2D>("Assets/Textures/MyTextures/collectable"));
+            floatyCube = new TheCollectable(this.GraphicsDevice, playerCamera.Position, MyGameVariable.MINIUM_DISTANCE, Content.Load<Texture2D>("Assets/Textures/MyTextures/collectable"));
 
             //Title Screen
             startMenu = Content.Load<Texture2D>("Assets/Textures/MyTextures/StartMenu");
@@ -106,33 +107,32 @@ namespace GD.App
             if (isActive == true)
             {
 
-                float moveAmount = 0;
-                
+                moveAmount = 0;
                 //Rotates the camera to the right
                 if (keyState.IsKeyDown(Keys.Right))
                 {
                     //The camera has an angle and a speed at which it will rotate the mathhelper works this to one full revolution
                     //The WrapAngle handles going over 360 and under 0 for us and returns a value that traverses this boundary
                     //(ie. It does the maths for me because i'm an idiot and also i don't have time to do it myself :) )
-                    playerCamera.Rotation = MathHelper.WrapAngle(playerCamera.Rotation - (rotateScale * timeElapsed));
+                    playerCamera.Rotation = MathHelper.WrapAngle(playerCamera.Rotation - (MyGameVariable.ROTATE_SCALE * timeElapsed));
                 }
 
                 //Rotates the camera to the Left
                 if (keyState.IsKeyDown(Keys.Left))
                 {
-                    playerCamera.Rotation = MathHelper.WrapAngle(playerCamera.Rotation + (rotateScale * timeElapsed));
+                    playerCamera.Rotation = MathHelper.WrapAngle(playerCamera.Rotation + (MyGameVariable.ROTATE_SCALE * timeElapsed));
                 }
 
                 //Allows the camera to move forward
                 if (keyState.IsKeyDown(Keys.Up))
                 {
-                    moveAmount = moveScale * timeElapsed;
+                    moveAmount = MyGameVariable.MOVE_SCALE * timeElapsed;
                 }
 
                 //Allows the camera to move backward
                 if (keyState.IsKeyDown(Keys.Down))
                 {
-                    moveAmount = -moveScale * timeElapsed;
+                    moveAmount = -MyGameVariable.MOVE_SCALE * timeElapsed;
                 }
 
                 //Turns off the maze to make it easier
@@ -184,7 +184,6 @@ namespace GD.App
                         //Every time the player picks up a cube, the position of the cube changes aswell as the layout of the maze
                         CalculateScore(gameTime);
                         theLevel = new Maze(GraphicsDevice);
-                       
                     }
 
                 }

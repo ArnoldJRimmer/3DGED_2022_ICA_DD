@@ -8,6 +8,7 @@
 using GD.Engine.Data;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using SharpDX.Direct3D11;
 
 namespace GD.App
 {
@@ -125,8 +126,26 @@ namespace GD.App
 
     public class MyGameVariable
     {
+        #region Level variables
         public static readonly int MAZE_WIDTH = 20;
         public static readonly int MAZE_HEIGHT = 20;
+        #endregion
+
+        #region Movement
+        public static readonly float MOVE_SCALE = 1.5f;
+        public static readonly float ROTATE_SCALE = MathHelper.PiOver2;
+        #endregion
+
+        #region Camera First Person
+        public static readonly float FIRST_PERSON_CAMERA_NCP = 0.05f;
+        public static readonly float FIRST_PERSON_CAMERA_FCP = 100f;
+        public static readonly Vector3 FIRST_PERSON_DEFAULT_CAMERA_POSITION = new Vector3(0.5f, 0.5f, 0.5f);
+        #endregion
+
+        #region FloatyCube
+        public static readonly float MINIUM_DISTANCE = 10f;
+        #endregion
+
 
     }
 
