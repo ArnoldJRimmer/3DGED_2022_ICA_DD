@@ -24,21 +24,14 @@ namespace GD.App
         private Texture2D startMenu;
         private Song startSong;
         private Song pickUp;
-        enum GameState
-        {
-            TitleScreen,
-            Playing,
-            GameOver
-        }
-
-        GameState currentGameState = GameState.TitleScreen;
         #endregion
 
         #region Fields
-        private int score = 3000;
+        private int score;
         private float moveAmount;
         private bool isActive = false;
         private bool stopDrawing = false;
+        private bool allowMovement = true;
         #endregion
 
         #region Main
@@ -71,10 +64,8 @@ namespace GD.App
             //The collectable
             floatyCube = new TheCollectable(this.GraphicsDevice, playerCamera.Position, MyGameVariable.MINIUM_DISTANCE, Content.Load<Texture2D>("Assets/Textures/MyTextures/collectable"));
 
-            //Title Screen
-            startMenu = Content.Load<Texture2D>("Assets/Textures/MyTextures/StartMenu");
             pickUp = Content.Load<Song>("Assets/Audio/Diegetic/Pick_up-sound");
-            scoreFont = Content.Load<SpriteFont>("Assets/Fonts/menu");
+            LoadGraphicMedia();
             LoadSounds();
         }
         #endregion
@@ -88,6 +79,16 @@ namespace GD.App
         }
         #endregion
 
+        #region LoadMedia
+        private void LoadGraphicMedia()
+        {
+            //Title Screen
+            startMenu = Content.Load<Texture2D>("Assets/Textures/MyTextures/StartMenu");
+            //Score Font
+            scoreFont = Content.Load<SpriteFont>("Assets/Fonts/menu");
+        }
+        #endregion
+
         #region Update
         protected override void Update(GameTime gameTime)
         {
@@ -98,7 +99,7 @@ namespace GD.App
             KeyboardState keyState = Keyboard.GetState();
 
             //Starts the game
-            if (keyState.IsKeyDown(Keys.Space))
+            if (keyState.IsKeyDown(Keys.Space) && score!=MyGameVariable.END_SCORE)
             {
                 isActive = true;
             }
@@ -107,7 +108,6 @@ namespace GD.App
             //The core fucntionality of the game
             if (isActive == true)
             {
-
                 moveAmount = 0;
                 //Rotates the camera to the right
                 if (keyState.IsKeyDown(Keys.Right))
@@ -151,7 +151,6 @@ namespace GD.App
                 {
                     //we create a new vector 3 that holds the direction the player is facing and where they will end up if they moved forward
                     Vector3 newLocation = playerCamera.PreviewMove(moveAmount);
-                    bool allowMovement = true;
 
                     //We check to see if the player is within the bounds of the floor
                     //If they are they can move, else they can't
@@ -186,9 +185,6 @@ namespace GD.App
                         CalculateScore(gameTime);
                         theLevel = new Maze(GraphicsDevice);
                     }
-
-                    
-
 
                 }
 
