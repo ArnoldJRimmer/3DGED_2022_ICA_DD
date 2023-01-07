@@ -240,6 +240,7 @@ namespace GD.App
                     }
                     else
                     {
+                        //Draw in the "You Won State"
                         isActive = false;
                     }
 
