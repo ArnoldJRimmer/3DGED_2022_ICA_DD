@@ -144,6 +144,11 @@ namespace GD.App
 
         #region FloatyCube
         public static readonly float MINIUM_DISTANCE = 10f;
+        public static readonly int PICK_UP_SCORE = 1000;
+        #endregion
+
+        #region End Game Conditions
+        public static readonly int END_SCORE = 3000;
         #endregion
 
 

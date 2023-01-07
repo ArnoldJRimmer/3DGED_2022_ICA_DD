@@ -16,6 +16,7 @@ namespace GD.App
         #region Declarations
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        private SpriteFont scoreFont;
         private FpsCamera playerCamera;
         TheCollectable floatyCube;
         private Maze theLevel;
@@ -34,7 +35,7 @@ namespace GD.App
         #endregion
 
         #region Fields
-        private int score;
+        private int score = 3000;
         private float moveAmount;
         private bool isActive = false;
         private bool stopDrawing = false;
@@ -73,6 +74,7 @@ namespace GD.App
             //Title Screen
             startMenu = Content.Load<Texture2D>("Assets/Textures/MyTextures/StartMenu");
             pickUp = Content.Load<Song>("Assets/Audio/Diegetic/Pick_up-sound");
+            scoreFont = Content.Load<SpriteFont>("Assets/Fonts/menu");
             LoadSounds();
         }
         #endregion
@@ -185,6 +187,9 @@ namespace GD.App
                         theLevel = new Maze(GraphicsDevice);
                     }
 
+                    
+
+
                 }
 
                 floatyCube.Update(gameTime);
@@ -201,28 +206,7 @@ namespace GD.App
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             GraphicsDevice.DepthStencilState = DepthStencilState.Default;
-
-            if (isActive == false)
-            {
-                _spriteBatch.Begin();
-                _spriteBatch.Draw(startMenu, Vector2.Zero, Color.White);
-                _spriteBatch.End();
-            }
-            else
-            {
-                if (stopDrawing)
-                {
-                    //theLevel.Draw(playerCamera, basicEffect);
-                }
-                else
-                {
-                    theLevel.Draw(playerCamera, basicEffect);
-                }
-
-                this.Window.Title = score.ToString();
-            }
-
-            floatyCube.Draw(playerCamera, basicEffect);
+            CheckGameState();
             base.Draw(gameTime);
         }
         #endregion
@@ -230,7 +214,43 @@ namespace GD.App
         #region Helper Methods
         private void CalculateScore(GameTime gameTime)
         {
-            score += 1000;
+            score += MyGameVariable.PICK_UP_SCORE;
+        }
+
+        private void CheckGameState()
+        {
+            if (isActive == false && score == 0)
+            {
+                _spriteBatch.Begin();
+                _spriteBatch.Draw(startMenu, Vector2.Zero, Color.White);
+                _spriteBatch.End();
+            }
+            else
+            {
+                if (stopDrawing && score != MyGameVariable.END_SCORE)
+                {
+                    //theLevel.Draw(playerCamera, basicEffect);
+                    floatyCube.Draw(playerCamera, basicEffect);
+                }
+                else
+                {
+                    if (score != MyGameVariable.END_SCORE)
+                    {
+                        theLevel.Draw(playerCamera, basicEffect);
+                        floatyCube.Draw(playerCamera, basicEffect);
+                        _spriteBatch.Begin();
+                        _spriteBatch.DrawString(scoreFont, "Score: " + score.ToString(), Vector2.Zero, Color.White);
+                        _spriteBatch.End();
+                    }
+                    else
+                    {
+                        isActive = false;
+                    }
+
+                }
+
+            }
+
         }
         #endregion
 

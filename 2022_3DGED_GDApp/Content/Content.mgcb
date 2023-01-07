@@ -44,6 +44,13 @@
 /processorParam:TextureFormat=Compressed
 /build:Assets/Fonts/menu.spritefont
 
+#begin Assets/Fonts/menu.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Assets/Fonts/menu.spritefont
+
 #begin Assets/Fonts/Perf.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
