@@ -28,7 +28,7 @@ namespace GD.App
 
         #region Fields
         private int score;
-        private float time;
+        private float time = 5f;
         private float moveAmount;
         private bool isActive = false;
         private bool stopDrawing = false;
@@ -99,10 +99,9 @@ namespace GD.App
             KeyboardState keyState = Keyboard.GetState();
 
             //Starts the game
-            if (keyState.IsKeyDown(Keys.Space) && score!=MyGameVariable.END_SCORE)
+            if (keyState.IsKeyDown(Keys.Space) && score!=MyGameVariable.END_SCORE && time > 0)
             {
                 isActive = true;
-               
             }
 
             #region CoreGameFunctionailty
@@ -110,7 +109,7 @@ namespace GD.App
             if (isActive == true)
             {
                 moveAmount = 0;
-                time += timeElapsed;
+                time -= (float)gameTime.ElapsedGameTime.TotalMinutes;
                 //Rotates the camera to the right
                 if (keyState.IsKeyDown(Keys.Right))
                 {
@@ -184,7 +183,7 @@ namespace GD.App
                     {
                         floatyCube.PositionCollectable(playerCamera.Position, 5f);
                         //Every time the player picks up a cube, the position of the cube changes aswell as the layout of the maze
-                        CalculateScore(gameTime);
+                        CalculateScore();
                         theLevel = new Maze(GraphicsDevice);
                     }
 
@@ -211,14 +210,16 @@ namespace GD.App
         #endregion
 
         #region Helper Methods
-        private void CalculateScore(GameTime gameTime)
+        private int CalculateScore()
         {
-            score += MyGameVariable.PICK_UP_SCORE;
+           return score += MyGameVariable.PICK_UP_SCORE;
         }
 
+       
         private void CheckGameState()
         {
-            if (isActive == false && score == 0)
+            //Start menu
+            if (isActive == false && score == 0 && time > 0)
             {
                 _spriteBatch.Begin();
                 _spriteBatch.Draw(startMenu, Vector2.Zero, Color.White);
@@ -226,27 +227,46 @@ namespace GD.App
             }
             else
             {
-                if (stopDrawing && score != MyGameVariable.END_SCORE)
+                if (stopDrawing && score != MyGameVariable.END_SCORE && time > 0)
                 {
                     //theLevel.Draw(playerCamera, basicEffect);
                     floatyCube.Draw(playerCamera, basicEffect);
                 }
                 else
                 {
-                    if (score != MyGameVariable.END_SCORE)
+
+                    if (score != MyGameVariable.END_SCORE && time > 0)
                     {
                         theLevel.Draw(playerCamera, basicEffect);
                         floatyCube.Draw(playerCamera, basicEffect);
                         _spriteBatch.Begin();
                         _spriteBatch.DrawString(scoreFont, "Score: " + score.ToString(), Vector2.Zero, Color.White);
-                        _spriteBatch.DrawString(scoreFont, "Time: " + time.ToString(),new Vector2(500,0),Color.White);
+                        _spriteBatch.DrawString(scoreFont, "Time: " + time.ToString("0.00"),new Vector2(500,0),Color.White);
                         _spriteBatch.End();
                     }
-                    else
+                    else 
                     {
+                        if (time <= 0)
+                        {
+                            //Draw in GameOver
+                            _spriteBatch.Begin();
+                            _spriteBatch.DrawString(scoreFont, "GameOver - Ran out of time", Vector2.Zero, Color.White);
+                            _spriteBatch.End();
+                            isActive = false;
+                        }
+
                         //Draw in the "You Won State"
+                        _spriteBatch.Begin();
+                        _spriteBatch.DrawString(scoreFont, "You won", Vector2.Zero, Color.White);
+                        _spriteBatch.End();
+                        
                         isActive = false;
                     }
+
+
+                   
+
+
 
                 }
 
