@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using System;
 using Keyboard = Microsoft.Xna.Framework.Input.Keyboard;
 
 namespace GD.App
@@ -36,19 +37,19 @@ namespace GD.App
 
         GameState currentGameState = GameState.TitleScreen;
         #endregion
-
+        #region Fields
         float moveScale = 1.5f;
         float rotateScale = MathHelper.PiOver2;
         private float lastScoreTime;
         private int score;
         private bool isActive = false;
         private bool stopDrawing = false;
+        #endregion
 
         public Main()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            IsMouseVisible = true;
         }
 
         protected override void Initialize()
@@ -76,6 +77,7 @@ namespace GD.App
             MediaPlayer.Play(startSong);
             MediaPlayer.IsRepeating = true;
         }
+
         protected override void Update(GameTime gameTime)
         {
 
@@ -84,16 +86,17 @@ namespace GD.App
             float timeElapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
             KeyboardState keyState = Keyboard.GetState();
 
+            //Starts the game
             if (keyState.IsKeyDown(Keys.Space))
             {
                 isActive = true;
-                
             }
 
+            #region CoreGameFunctionailty
             //The core fucntionality of the game
             if (isActive == true)
             {
-               
+
                 float moveAmount = 0;
 
                 //Rotates the camera to the right
@@ -102,7 +105,7 @@ namespace GD.App
 
                     //The camera has an angle and a speed at which it will rotate the mathhelper works this to one full revolution
                     //The WrapAngle handles going over 360 and under 0 for us and returns a value that traverses this boundary
-                    //(ie. It does the maths for me because i'm an idiot and also i don't have time or to do it myself :) )
+                    //(ie. It does the maths for me because i'm an idiot and also i don't have time to do it myself :) )
                     playerCamera.Rotation = MathHelper.WrapAngle(playerCamera.Rotation - (rotateScale * timeElapsed));
                 }
 
@@ -170,24 +173,19 @@ namespace GD.App
                     if (floatyCube.colliable.Contains(playerCamera.Position) == ContainmentType.Contains)
                     {
                         floatyCube.PositionCollectable(playerCamera.Position, 5f);
-                        float thisTime = (float)gameTime.TotalGameTime.TotalSeconds;
-                        float scoreTime = thisTime - lastScoreTime;
-                        score += 1000;
-
-                        if (scoreTime < 120)
-                        {
-                            score += (120 - (int)scoreTime * 100);
-                        }
-                        lastScoreTime = scoreTime;
-
+                        //Every time the player picks up a cube, the position of the cube changes aswell as the layout of the maze
+                        theLevel = new Maze(GraphicsDevice);
+                        CalculateScore(gameTime);
                     }
 
                 }
 
                 floatyCube.Update(gameTime);
             }
-           
+
             base.Update(gameTime);
+            #endregion
+
         }
 
         protected override void Draw(GameTime gameTime)
@@ -218,5 +216,23 @@ namespace GD.App
             floatyCube.Draw(playerCamera, basicEffect);
             base.Draw(gameTime);
         }
+
+        #region Helper Methods
+        private void CalculateScore(GameTime gameTime)
+        {
+            float thisTime = (float)gameTime.TotalGameTime.TotalSeconds;
+            float scoreTime = thisTime - lastScoreTime;
+            score += 1000;
+
+
+            if (scoreTime < 120)
+            {
+                score += (120 - (int)scoreTime * 100);
+            }
+            lastScoreTime = scoreTime;
+        }
+        #endregion
+
     }
+
 }

@@ -24,9 +24,9 @@ namespace App.Levels.MakingTheMaze
 
         Color[] colorOfWalls = new Color[4]
         {
-            Color.Green,
+            Color.Gray,
             Color.Red,
-            Color.Green,
+            Color.Gray,
             Color.Red
         };
         #endregion
