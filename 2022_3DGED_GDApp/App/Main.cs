@@ -22,6 +22,7 @@ namespace GD.App
         private BasicEffect basicEffect;
         private Texture2D startMenu;
         private Song startSong;
+        private Song pickUp;
         enum GameState
         {
             TitleScreen,
@@ -33,10 +34,12 @@ namespace GD.App
         #endregion
 
         #region Fields
+        //Appdata these
         float moveScale = 1.5f;
         float rotateScale = MathHelper.PiOver2;
         private float lastScoreTime;
         private int score;
+        ////////////////////
         private bool isActive = false;
         private bool stopDrawing = false;
         #endregion
@@ -69,6 +72,7 @@ namespace GD.App
 
             //Title Screen
             startMenu = Content.Load<Texture2D>("Assets/Textures/MyTextures/StartMenu");
+            pickUp = Content.Load<Song>("Assets/Audio/Diegetic/Pick_up-sound");
             LoadSounds();
         }
         #endregion
@@ -103,11 +107,10 @@ namespace GD.App
             {
 
                 float moveAmount = 0;
-
+                
                 //Rotates the camera to the right
                 if (keyState.IsKeyDown(Keys.Right))
                 {
-
                     //The camera has an angle and a speed at which it will rotate the mathhelper works this to one full revolution
                     //The WrapAngle handles going over 360 and under 0 for us and returns a value that traverses this boundary
                     //(ie. It does the maths for me because i'm an idiot and also i don't have time to do it myself :) )
@@ -179,8 +182,9 @@ namespace GD.App
                     {
                         floatyCube.PositionCollectable(playerCamera.Position, 5f);
                         //Every time the player picks up a cube, the position of the cube changes aswell as the layout of the maze
-                        theLevel = new Maze(GraphicsDevice);
                         CalculateScore(gameTime);
+                        theLevel = new Maze(GraphicsDevice);
+                       
                     }
 
                 }
