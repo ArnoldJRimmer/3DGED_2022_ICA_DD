@@ -1,6 +1,8 @@
 ﻿
 using GD.Engine;
 using GD.Engine.Globals;
+using GD.Engine.Managers;
+using GD.Engine.Parameters;
 using Microsoft.VisualBasic.Devices;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -18,6 +20,7 @@ namespace GD.App
         private SpriteBatch _spriteBatch;
         private SpriteFont scoreFont;
         private FpsCamera playerCamera;
+        private CameraManager cameraManager;
         TheCollectable floatyCube;
         private Maze theLevel;
         private BasicEffect basicEffect;
@@ -53,9 +56,40 @@ namespace GD.App
                 MyGameVariable.FIRST_PERSON_CAMERA_FCP);
             basicEffect = new BasicEffect(GraphicsDevice);
             theLevel = new Maze(GraphicsDevice);
+            //InitilaiszeCurveCamera();
+
             base.Initialize();
         }
         #endregion
+
+        //private void InitilaiszeCurveCamera()
+        //{
+        //    GameObject cameraGameObject = null;
+        //    Curve3D curve3D = new Curve3D(CurveLoopType.Oscillate);
+        //    curve3D.Add(new Vector3(0, 2, 5), 0);
+        //    curve3D.Add(new Vector3(0, 5, 10), 1000);
+        //    curve3D.Add(new Vector3(0, 8, 25), 2500);
+        //    curve3D.Add(new Vector3(0, 5, 35), 4000);
+
+        //    cameraGameObject = new GameObject(AppData.CURVE_CAMERA_NAME);
+        //    cameraGameObject.Transform =
+        //        new Transform(null, null, null);
+        //    cameraGameObject.AddComponent(new Camera(
+        //        MathHelper.PiOver2 / 2,
+        //        (float)_graphics.PreferredBackBufferWidth / _graphics.PreferredBackBufferHeight,
+        //        0.1f, 3500,
+        //          new Viewport(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight)));
+
+        //    //define what action the curve will apply to the target game object
+        //    var curveAction = (Curve3D curve, GameObject target, GameTime gameTime) =>
+        //    {
+        //        target.Transform.SetTranslation(curve.Evaluate(gameTime.TotalGameTime.TotalMilliseconds, 4));
+        //    };
+
+        //    cameraGameObject.AddComponent(new CurveBehaviour(curve3D, curveAction));
+        //    cameraManager.Add(cameraGameObject.Name, cameraGameObject);
+        //    cameraManager.SetActiveCamera(AppData.FIRST_PERSON_CAMERA_NAME);
+        //}
 
         #region LoadContent
         protected override void LoadContent()
@@ -214,8 +248,9 @@ namespace GD.App
         {
            return score += MyGameVariable.PICK_UP_SCORE;
         }
+        #endregion
 
-       
+        #region CheckState
         private void CheckGameState()
         {
             //Start menu
@@ -241,10 +276,10 @@ namespace GD.App
                         floatyCube.Draw(playerCamera, basicEffect);
                         _spriteBatch.Begin();
                         _spriteBatch.DrawString(scoreFont, "Score: " + score.ToString(), Vector2.Zero, Color.White);
-                        _spriteBatch.DrawString(scoreFont, "Time: " + time.ToString("0.00"),new Vector2(500,0),Color.White);
+                        _spriteBatch.DrawString(scoreFont, "Time: " + time.ToString("0.00"), new Vector2(500, 0), Color.White);
                         _spriteBatch.End();
                     }
-                    else 
+                    else
                     {
                         if (time <= 0)
                         {
@@ -259,14 +294,9 @@ namespace GD.App
                         _spriteBatch.Begin();
                         _spriteBatch.DrawString(scoreFont, "You won", Vector2.Zero, Color.White);
                         _spriteBatch.End();
-                        
+
                         isActive = false;
                     }
-
-
-                   
-
-
 
                 }
 
