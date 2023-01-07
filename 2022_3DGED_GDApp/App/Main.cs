@@ -28,10 +28,10 @@ namespace GD.App
 
         #region Fields
         private int score;
+        private float time;
         private float moveAmount;
         private bool isActive = false;
         private bool stopDrawing = false;
-        private bool allowMovement = true;
         #endregion
 
         #region Main
@@ -102,6 +102,7 @@ namespace GD.App
             if (keyState.IsKeyDown(Keys.Space) && score!=MyGameVariable.END_SCORE)
             {
                 isActive = true;
+               
             }
 
             #region CoreGameFunctionailty
@@ -109,6 +110,7 @@ namespace GD.App
             if (isActive == true)
             {
                 moveAmount = 0;
+                time += timeElapsed;
                 //Rotates the camera to the right
                 if (keyState.IsKeyDown(Keys.Right))
                 {
@@ -151,7 +153,7 @@ namespace GD.App
                 {
                     //we create a new vector 3 that holds the direction the player is facing and where they will end up if they moved forward
                     Vector3 newLocation = playerCamera.PreviewMove(moveAmount);
-
+                    bool allowMovement = true;
                     //We check to see if the player is within the bounds of the floor
                     //If they are they can move, else they can't
                     if (newLocation.X < 0 || newLocation.X > MyGameVariable.MAZE_WIDTH)
@@ -190,7 +192,8 @@ namespace GD.App
 
                 floatyCube.Update(gameTime);
             }
-
+           
+           
             base.Update(gameTime);
             #endregion
 
@@ -236,6 +239,7 @@ namespace GD.App
                         floatyCube.Draw(playerCamera, basicEffect);
                         _spriteBatch.Begin();
                         _spriteBatch.DrawString(scoreFont, "Score: " + score.ToString(), Vector2.Zero, Color.White);
+                        _spriteBatch.DrawString(scoreFont, "Time: " + time.ToString(),new Vector2(500,0),Color.White);
                         _spriteBatch.End();
                     }
                     else
