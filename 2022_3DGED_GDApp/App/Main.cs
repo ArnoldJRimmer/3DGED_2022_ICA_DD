@@ -42,6 +42,7 @@ namespace GD.App
         private float lastScoreTime;
         private int score;
         private bool isActive = false;
+        private bool stopDrawing = false;
 
         public Main()
         {
@@ -123,6 +124,15 @@ namespace GD.App
                     moveAmount = -moveScale * timeElapsed;
                 }
 
+                if (keyState.IsKeyDown(Keys.M))
+                {
+                    stopDrawing = true;
+                }
+                else if (keyState.IsKeyUp(Keys.M))
+                {
+                    stopDrawing = false;
+                }
+
                 //As long as the player is moving 
                 if (moveAmount != 0)
                 {
@@ -192,8 +202,15 @@ namespace GD.App
             }
             else
             {
-                
-                //theLevel.Draw(playerCamera, basicEffect);
+                if (stopDrawing)
+                {
+                    //theLevel.Draw(playerCamera, basicEffect);
+                }
+                else
+                {
+                    theLevel.Draw(playerCamera, basicEffect);
+                }
+
                 this.Window.Title = score.ToString();
             }
 
