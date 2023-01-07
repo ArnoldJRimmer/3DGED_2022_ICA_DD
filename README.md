@@ -30,6 +30,17 @@ This repository contains code for the game Maze_Runner_2.0
 - [ ] Add references to music used
 - [ ] Add references to textures used
 
-### References for Material Use
+### References for Material Used
+(Cube Texture)
+WallpaperAccess. (n.d.). Awesome Gradient Blur Wallpapers. [online] Available at: https://wallpaperaccess.com/gradient-blur [Accessed 7 Jan. 2023].
+(Main Menu)
+Luengo, C. (n.d.). Cris’ Image Analysis Blog | Solving mazes using image analysis. [online] www.crisluengo.net. Available at: https://www.crisluengo.net/archives/277/ [Accessed 7 Jan. 2023].
+(Main Audio)
+Anon, (2017). Puzzle Music | Soundimage.org. [online] Available at: https://soundimage.org/puzzle-music/ [Accessed 7 Jan. 2023].
 
+‌
+
+
+
+‌
 
