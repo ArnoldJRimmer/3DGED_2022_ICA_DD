@@ -124,6 +124,7 @@ namespace GD.App
                     moveAmount = -moveScale * timeElapsed;
                 }
 
+                //Turns off the maze to make it easier
                 if (keyState.IsKeyDown(Keys.M))
                 {
                     stopDrawing = true;
