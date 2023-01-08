@@ -34,7 +34,7 @@ namespace GD.App
         #endregion
 
         #region Fields
-        private int score = 2000;
+        private int score;
         private float time = 3f;
         private float moveAmount;
         private bool isActive = false;
