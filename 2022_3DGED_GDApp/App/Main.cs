@@ -34,7 +34,7 @@ namespace GD.App
         #endregion
 
         #region Fields
-        private int score;
+        private int score = 2000;
         private float time = 3f;
         private float moveAmount;
         private bool isActive = false;
@@ -338,10 +338,14 @@ namespace GD.App
                             isActive = false;
                         }
 
-                        //Draw in the "You Won State"
-                        _spriteBatch.Begin();
-                        _spriteBatch.DrawString(scoreFont, "You won", Vector2.Zero, Color.White);
-                        _spriteBatch.End();
+                        if(score == MyGameVariable.END_SCORE)
+                        {
+                            //Draw in the "You Won State"
+                            _spriteBatch.Begin();
+                            _spriteBatch.DrawString(scoreFont, "You won", Vector2.Zero, Color.White);
+                            _spriteBatch.End();
+                        }
+  
 
                         isActive = false;
                     }

@@ -22,13 +22,17 @@ This repository contains code for the game Maze_Runner_2.0
 - [x] Add Ui element timer to screen
 - [x] Add overview rotating camera
 - [x] Add gameOver state (lose)
+- [x] add cube being drawn onto map
+- [x] Add references to music used
+- [x] Add references to textures used
+
 
 ### Tasked That need to be completed
 - [ ] Add pickUp Sound
 - [ ] Fix the rotation of the mouse
-- [ ] add cube being drawn onto map
-- [ ] Add references to music used
-- [ ] Add references to textures used
+- [ ] Put game on loop
+- [ ] Add player icon to mini map
+- [ ] Add Textures to walls
 
 ### References for Material Used
 (Cube Texture)
@@ -38,7 +42,8 @@ Luengo, C. (n.d.). Cris’ Image Analysis Blog | Solving mazes using image analy
 (Main Audio)
 Anon, (2017). Puzzle Music | Soundimage.org. [online] Available at: https://soundimage.org/puzzle-music/ [Accessed 7 Jan. 2023].
 
-‌
+‌### Link To screencast
+https://youtu.be/9WVc_JTD2_I
 
 
 
