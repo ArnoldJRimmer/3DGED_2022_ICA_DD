@@ -112,7 +112,32 @@ namespace GD.App
             effect.Texture = myTexture;
 
             Matrix center = Matrix.CreateTranslation(new Vector3(-0.5f, -0.5f, -0.5f));
-            Matrix scale = Matrix.CreateScale(0.5f);
+            Matrix scale = Matrix.CreateScale(0.2f);
+            Matrix translate = Matrix.CreateTranslation(location);
+            Matrix y_Rotation = Matrix.CreateRotationY(rotation);
+            Matrix z_Rot = Matrix.CreateRotationZ(z_Rotation);
+
+            effect.World = center * y_Rotation * z_Rot * scale * translate;
+            effect.View = fpCamera.View;
+            effect.Projection = fpCamera.Projection;
+
+            foreach (EffectPass pass in effect.CurrentTechnique.Passes)
+            {
+                pass.Apply();
+                myDevice.SetVertexBuffer(collectableVertexBuffer);
+                myDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, collectableVertexBuffer.VertexCount / 3);
+            }
+
+        }
+
+        public void Draw(Curve_Camera fpCamera, BasicEffect effect)
+        {
+            effect.VertexColorEnabled = false;
+            effect.TextureEnabled = true;
+            effect.Texture = myTexture;
+
+            Matrix center = Matrix.CreateTranslation(new Vector3(-0.5f, -0.5f, -0.5f));
+            Matrix scale = Matrix.CreateScale(0.2f);
             Matrix translate = Matrix.CreateTranslation(location);
             Matrix y_Rotation = Matrix.CreateRotationY(rotation);
             Matrix z_Rot = Matrix.CreateRotationZ(z_Rotation);

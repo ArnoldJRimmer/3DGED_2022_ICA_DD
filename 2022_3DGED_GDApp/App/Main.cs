@@ -352,6 +352,7 @@ namespace GD.App
                 if (enableMouseView)
                 {
                     theLevel.Draw(curveCamera, basicEffect);
+                    floatyCube.Draw(curveCamera, basicEffect);
                 }
 
             }
