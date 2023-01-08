@@ -3,6 +3,10 @@
 ## Overview ##
 This repository contains code for the game Maze_Runner_2.0
 
+## Controls ##
+SPACE_BAR - starts game
+Arrow Keys - movement + rotation
+
 ### Tasked Completed
 - [x] Make use of Vertex Buffers and vertices buffer(Floor)
 - [x] Add a main camera
