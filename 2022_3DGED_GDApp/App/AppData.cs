@@ -127,8 +127,8 @@ namespace GD.App
     public class MyGameVariable
     {
         #region Level variables
-        public static readonly int MAZE_WIDTH = 20;
-        public static readonly int MAZE_HEIGHT = 20;
+        public static readonly int MAZE_WIDTH = 9;
+        public static readonly int MAZE_HEIGHT = 9;
         #endregion
 
         #region Movement

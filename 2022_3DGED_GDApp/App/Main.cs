@@ -35,7 +35,7 @@ namespace GD.App
 
         #region Fields
         private int score;
-        private float time = 5f;
+        private float time = 3f;
         private float moveAmount;
         private bool isActive = false;
         private bool stopDrawing = false;
@@ -87,7 +87,6 @@ namespace GD.App
             base.Initialize();
         }
         #endregion
-
 
         #region LoadContent
         protected override void LoadContent()
